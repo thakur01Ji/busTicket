@@ -2,9 +2,12 @@ import express from 'express';
 import { ENV } from './config/env.js';
 import { migrateSchema } from './config/migrate.js';
 import cors from 'cors';
+import job from './db/cron.js';;
 
 const app = express();
 const PORT = ENV.PORT || 5001;
+
+if(ENV.NODE_ENV === "production" ) job.start();
 
 app.use(express.json());
 app.use(cors());
