@@ -9,15 +9,20 @@ let database_port;
 let database_user;
 let database_password;
 let database_name;
-
-if(dbCount === 1){
+let database_ssl;
+console.log("DATABASE_NUMBER:", dbCount);
+if(dbCount == 1){
+    console.log("Using separate DB config from ENV variables");
     database_host = ENV.DATABASE_HOST;
     database_port = ENV.DATABASE_PORT;
     database_user = ENV.DATABASE_USER;
     database_password = ENV.DATABASE_PASSWORD;
     database_name = ENV.DATABASE_NAME;
-    database_ssl = ENV.DATABASE_SSL;
+    database_ssl = ENV.DATABASE_SSL || {
+            rejectUnauthorized: false
+        };
 }else{
+    console.log("Using DATABASE_URL for DB config");
     database_host = dbUrl.hostname;
     database_port = dbUrl.port || 3306;
     database_user = dbUrl.username;
@@ -27,6 +32,9 @@ if(dbCount === 1){
       ? { rejectUnauthorized: false }
       : null;
 }
+
+console.log("Credentials - Host:", database_host, "Port:", database_port, "User:", database_user, "DB Name:", database_name, "Password:", database_password);
+
 export const pool = mariadb.createPool({
   host: database_host,
   port: database_port || 3306,
