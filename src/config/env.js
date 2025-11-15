@@ -9,6 +9,8 @@ export const ENV = {
     DATABASE_PASSWORD : process.env.DB_PASSWORD,
     DATABASE_NAME : process.env.DB_NAME,
     DATABASE_PORT : process.env.DB_PORT,
-    DATABASE_NUMBER : process.env.DB_NUMBER
+    DATABASE_NUMBER : process.env.DB_NUMBER,
+    JWT_SECRET : process.env.JWT_SECRET || "secretkey",
+    SCHEMA_MIGRATION_FILE : process.env.SCHEMA_MIGRATION_FILE,
 
 }
