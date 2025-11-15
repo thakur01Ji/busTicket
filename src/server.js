@@ -3,7 +3,7 @@ import { ENV } from './config/env.js';
 import { migrateSchema } from './config/migrate.js';
 import cors from 'cors';
 import job from './db/cron.js';;
-import { appRouter } from './routes/index.js';
+import router from './routes/index.js';
 
 const app = express();
 const PORT = ENV.PORT || 5001;
@@ -25,7 +25,7 @@ app.get('/api/health', (req, res) =>{
     res.status(200).json({status: "OK" });
 });
 
-app.use('/api',appRouter);
+app.use('/api',router);
 
 app.listen(PORT, () =>{
     console.log("Server is running on PORT", PORT);
