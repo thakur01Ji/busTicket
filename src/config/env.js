@@ -8,6 +8,7 @@ export const ENV = {
     DATABASE_USER : process.env.DB_USER,
     DATABASE_PASSWORD : process.env.DB_PASSWORD,
     DATABASE_NAME : process.env.DB_NAME,
-    DATABASE_PORT : process.env.DB_PORT
+    DATABASE_PORT : process.env.DB_PORT,
+    DATABASE_NUMBER : process.env.DB_NUMBER
 
 }
