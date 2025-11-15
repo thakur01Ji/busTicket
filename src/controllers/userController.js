@@ -25,10 +25,10 @@ export const registerUser = async (req, res) => {
       [insertId]
     );
 
-    return res.json({ message: "User registered successfully", user_id: insertId });
+    return res.json({ success: true, message: "User registered successfully", user_id: insertId });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -40,6 +40,7 @@ export const loginUser = async (req, res) => {
     if (rows.length === 0) return res.status(400).json({ message: "Invalid credentials" });
 
     const user = rows[0];
+    console.log("User is lfound, jsut comparing the password");
 
     const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) return res.status(400).json({ message: "Invalid credentials" });
@@ -51,10 +52,12 @@ export const loginUser = async (req, res) => {
         email: user.email
       },
       JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "20m" }
     );
 
-    res.json({
+    // console.log("Generated token is ",token);
+
+    res.json({data : {
       message: "Login successful",
       token,
       user: {
@@ -63,19 +66,19 @@ export const loginUser = async (req, res) => {
         role: user.role,
         email: user.email
       }
-    });
+    }, success:true });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
 export const getAllUsers = async (_, res) => {
   try {
     const data = await query(`SELECT id, name, email, phone, role, is_active, is_verified, created_at FROM users`);
-    res.json(data);
+    res.json({success:true, message: "Data loaded",data:data});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -85,9 +88,9 @@ export const getUserById = async (req, res) => {
       req.params.id
     ]);
     if (!rows.length) return res.status(404).json({ message: "User not found" });
-    res.json(rows[0]);
+    res.json({success:true, message: "Data loaded",data:rows[0]});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -96,15 +99,15 @@ export const deactivateUser = async (req, res) => {
     await query("UPDATE users SET is_active = 0 WHERE id = ?", [req.params.id]);
     res.json({ message: "User deactivated" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
 export const verifyUser = async (req, res) => {
   try {
     await query("UPDATE users SET is_verified = 1 WHERE id = ?", [req.params.id]);
-    res.json({ message: "User marked verified" });
+    res.json({ success:true, message: "User marked verified" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };

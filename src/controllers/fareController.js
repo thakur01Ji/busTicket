@@ -7,9 +7,9 @@ export const getAllFares = async (req, res) => {
       FROM fares f
       JOIN routes r ON f.route_id = r.id;
     `);
-    res.json(data);
+    res.json({success:true, message: "Data loaded",data:data});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -23,6 +23,6 @@ export const addFare = async (req, res) => {
     );
     res.json({ message: "Fare added successfully" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };

@@ -33,7 +33,7 @@ if(dbCount == 1){
       : null;
 }
 
-console.log("Credentials - Host:", database_host, "Port:", database_port, "User:", database_user, "DB Name:", database_name, "Password:", database_password);
+// console.log("Credentials - Host:", database_host, "Port:", database_port, "User:", database_user, "DB Name:", database_name, "Password:", database_password);
 
 export const pool = mariadb.createPool({
   host: database_host,

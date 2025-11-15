@@ -11,10 +11,10 @@ export const updateSetting = async (req, res) => {
       [user_id, setting_key, setting_value]
     );
 
-    res.json({ message: "Setting updated" });
+    res.json({ success:true, message: "Setting updated" });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -23,8 +23,8 @@ export const getSettings = async (req, res) => {
     const settings = await query("SELECT * FROM user_settings WHERE user_id = ?", [
       req.params.user_id
     ]);
-    res.json(settings);
+    res.json({success:true, message: "Data loaded",data:settings});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };

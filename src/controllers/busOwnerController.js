@@ -18,10 +18,10 @@ export const createBusOwnerProfile = async (req, res) => {
       [user_id, company_name, license_number, gst_number, wallet_id]
     );
 
-    res.json({ message: "Bus owner profile created" });
+    res.json({ success:true,message: "Bus owner profile created" });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+        res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -32,10 +32,24 @@ export const getBusOwnerProfile = async (req, res) => {
       [req.params.user_id]
     );
 
-    if (!data.length) return res.status(404).json({ message: "Not found" });
+    if (!data.length) return res.status(404).json({ success:false,message: "Not found" });
     res.json(data[0]);
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
+
+export const getAllBusOwners = async (_, res) => {
+    try{
+        console.log("Request for getting all bus owners is fired");
+        const data = await query(
+            `SELECT * FROM bus_owner_profiles;`
+        );
+
+        if (!data.length) return res.status(404).json({ message: "No bus owners found" });
+        res.json({success:true,message:"Data is loaded",data : data});
+    }catch(err){
+        res.status(500).json({ success:false,message: err.message });
+    }
+}

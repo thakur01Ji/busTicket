@@ -8,9 +8,9 @@ export const getAllBuses = async (req, res) => {
       LEFT JOIN routes r ON b.route_id = r.id
       LEFT JOIN bus_owners o ON b.bus_owner_id = o.id;
     `);
-    res.json(data);
+    res.json({success:true, message: "Data is loaded",data});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false, message: err.message });
   }
 };
 
@@ -22,8 +22,8 @@ export const addBus = async (req, res) => {
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [name, bus_number, driver_name, conductor_name, bus_type, route_id, bus_owner_id]
     );
-    res.json({ message: "Bus added successfully" });
+    res.json({ success:true, message: "Bus added successfully" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false ,message: err.message });
   }
 };

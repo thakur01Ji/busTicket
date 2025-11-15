@@ -7,10 +7,10 @@ export const getWallet = async (req, res) => {
     ]);
 
     if (!rows.length) return res.status(404).json({ message: "Wallet not found" });
-    res.json(rows[0]);
+    res.json({success:true, message: "Data loaded",data:rows[0]});
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -23,9 +23,9 @@ export const addBalance = async (req, res) => {
       [amount, user_id]
     );
 
-    res.json({ message: "Wallet updated" });
+    res.json({success:true, message: "Wallet updated" });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };

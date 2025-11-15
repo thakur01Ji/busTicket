@@ -21,7 +21,7 @@ export const searchBuses = async (req, res) => {
     );
 
     if (!routes.length) {
-      return res.json({ message: "No direct routes found", buses: [] });
+      return res.json({ success: true, message: "No direct routes found", data: [] });
     }
 
     const routeIds = routes.map(r => r.id);
@@ -64,14 +64,14 @@ export const searchBuses = async (req, res) => {
       [from, to]
     );
 
-    return res.json({
+    return res.json({data: {
       routes: routes,
       buses: buses,
       timings: timings,
       fares: fares
-    });
+    }, success:true, message: "Search results loaded" });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };

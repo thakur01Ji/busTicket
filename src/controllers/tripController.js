@@ -8,9 +8,9 @@ export const getAllTrips = async (req, res) => {
       JOIN buses b ON t.bus_id = b.id
       JOIN routes r ON t.route_id = r.id;
     `);
-    res.json(data);
+    res.json({success:true, message: "Data loaded",data:data});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };
 
@@ -22,8 +22,8 @@ export const addTrip = async (req, res) => {
        VALUES (?, ?, ?, ?, ?)`,
       [bus_id, route_id, trip_date, start_time, status]
     );
-    res.json({ message: "Trip added successfully" });
+    res.json({ success:true,message: "Trip added successfully" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success:false,message: err.message });
   }
 };

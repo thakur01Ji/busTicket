@@ -3,6 +3,16 @@ import { schemaStatements } from "../db/schema.js";
 import path from "path";
 import fs from "fs/promises";
 import { ENV } from "../config/env.js";
+
+import { fileURLToPath } from 'url'; // Required if using ES Modules (type: "module")
+
+// Assume 'pool' and 'ENV' are defined and accessible
+
+// --- If using ES Modules (package.json has "type": "module") ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 export async function migrateSchema() {
   const conn = await pool.getConnection();
   const dbName = ENV.DATABASE_NAME || "bus_ticket_db";

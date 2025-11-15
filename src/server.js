@@ -13,11 +13,13 @@ if(ENV.NODE_ENV === "production" ) job.start();
 app.use(express.json());
 app.use(cors());
 
-migrateSchema()
-    .then(() => console.log("DataBase schemas checked and migrated"))
-    .catch((err) => {
-        console.error("Error during schema migration:", err);
-    });
+if(ENV.NODE_ENV === "production" ){
+    migrateSchema()
+        .then(() => console.log("DataBase schemas checked and migrated"))
+        .catch((err) => {
+            console.error("Error during schema migration:", err);
+        });
+}
 
 
 
